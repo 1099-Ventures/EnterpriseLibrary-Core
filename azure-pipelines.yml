@@ -1,0 +1,81 @@
+# Build the Enterprise Library, package and deploy to Nuget
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud - Enterprise Library'
+    organization: 'azuro'
+    scannerMode: 'MSBuild'
+    projectKey: 'azuro_Enterprise-Library'
+    projectName: 'Enterprise Library'
+    extraProperties: |
+      sonar.exclusions=**/obj/**,**/*.dll
+      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
+      sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build Project'
+  inputs:
+    command: 'build'
+    projects: '**/Azuro.CommonCore'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.Repository.LocalPath)'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run Unit Tests'
+  inputs:
+    command: 'test'
+    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    publishTestResults: true
+    projects: '**/Azuro.EnterpriseLibrary.Tests/*.csproj'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage report'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.opencover.xml'
+
+- task: SonarCloudAnalyze@1
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Package Common Library'
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/Azuro.CommonCore/Azuro.CommonCore.csproj'
+
+- task: NuGetCommand@2
+  displayName: 'Push to Azuro Github NuGet'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'Github Feed'
+
+# This Feed must be deprecated
+#- task: NuGetCommand@2
+#  displayName: 'Push to Azuro DevOps NuGet'
+#  inputs:
+#    command: 'push'
+#    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+#    nuGetFeedType: 'internal'
+#    publishVstsFeed: '28879a43-304a-430b-9631-b5a02d790263/ea1e1835-5013-41ae-99b4-cd5936e570b0'
+
+# Use an Organization scope feed - Replace the above feed
+- task: NuGetCommand@2
+  displayName: 'Push to Azuro DevOps NuGet'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '6f7c2d29-b673-4be4-96ef-e521a7e4dffa'
