@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azuro.CommonCore", "Azuro.CommonCore\Azuro.CommonCore.csproj", "{18FE6BF6-8235-46EB-A337-3609DABEC20D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azuro.EnterpriseLibrary.Tests", "Azuro.EnterpriseLibrary.Tests\Azuro.EnterpriseLibrary.Tests.csproj", "{B1BB2F2D-657D-4440-A342-05BEF733B5B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azuro.EnterpriseLibrary.ConsoleTester", "Azuro.EnterpriseLibrary.ConsoleTester\Azuro.EnterpriseLibrary.ConsoleTester.csproj", "{55493BFE-3A9D-432F-A3F1-E1C98D88BEE5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Scripts", "Build Scripts", "{CC0A43E7-9041-4941-82C6-60D9B8755506}"
+	ProjectSection(SolutionItems) = preProject
+		..\azure-pipelines-pr.yml = ..\azure-pipelines-pr.yml
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18FE6BF6-8235-46EB-A337-3609DABEC20D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18FE6BF6-8235-46EB-A337-3609DABEC20D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18FE6BF6-8235-46EB-A337-3609DABEC20D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18FE6BF6-8235-46EB-A337-3609DABEC20D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1BB2F2D-657D-4440-A342-05BEF733B5B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1BB2F2D-657D-4440-A342-05BEF733B5B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1BB2F2D-657D-4440-A342-05BEF733B5B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1BB2F2D-657D-4440-A342-05BEF733B5B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55493BFE-3A9D-432F-A3F1-E1C98D88BEE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55493BFE-3A9D-432F-A3F1-E1C98D88BEE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55493BFE-3A9D-432F-A3F1-E1C98D88BEE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55493BFE-3A9D-432F-A3F1-E1C98D88BEE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C06C7AF6-2EEC-4098-985A-38CB1FB52CC4}
+	EndGlobalSection
+EndGlobal
